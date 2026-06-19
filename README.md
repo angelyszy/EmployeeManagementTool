@@ -1,24 +1,16 @@
 # Employee Management Tool
 
-A simple employee management web app built with Django. It covers authentication,
-employee CRUD, daily attendance (check-in/check-out), attendance reports, server-side
-pagination & search, data export (Excel/CSV), and an admin dashboard with charts.
+A simple employee management web app built with Django. It covers authentication, employee CRUD, daily attendance (check-in/check-out), attendance reports, server-side pagination & search, data export (Excel/CSV), and an admin dashboard with charts.
 
 ## Features
 
-- **Authentication** — Admin and Employee accounts, each redirected to a different
-  home page after login.
-- **Employee management (CRUD)** — admin can add, edit, and delete employee records
-  (name, email, position, join date, active status).
-- **Attendance** — employees can check in and check out once per day. Admin can see
-  attendance for everyone, employees only see their own.
-- **Pagination & search** — both the employee list and attendance report are paginated
-  and searchable, all handled on the backend (no client-side JS filtering).
-- **Export** — employee and attendance data can be exported to Excel (openpyxl) and CSV.
-- **Dashboard** — `/dashboard/`, admin-only, shows employee count per position and a
-  7-day attendance chart using Chart.js.
-- **REST API** — basic DRF endpoints at `/api/employees/` and `/api/attendance/`
-  (mainly for completeness / testing with tools like Postman).
+- **Authentication**: Admin and Employee accounts, each redirected to a different home page after login.
+- **Employee management (CRUD)**: admin can add, edit, and delete employee records (name, email, position, join date, active status).
+- **Attendance**: employees can check in and check out once per day. Admin can see attendance for everyone, employees only see their own.
+- **Pagination & search**: both the employee list and attendance report are paginated and searchable, all handled on the backend (no client-side JS filtering).
+- **Export**: employee and attendance data can be exported to Excel (openpyxl) and CSV.
+- **Dashboard**: `/dashboard/`, admin-only, shows employee count per position and a 7-day attendance chart using Chart.js.
+- **REST API**: basic DRF endpoints at `/api/employees/` and `/api/attendance/` (mainly for completeness / testing with tools like Postman).
 
 ## Tech stack
 
@@ -67,9 +59,18 @@ templates/     all HTML templates
    ```
 7. Open `http://127.0.0.1:8000/` in your browser.
 
-If you'd rather set things up manually instead of using the seed command, you can
-create a superuser with `python manage.py createsuperuser` and add employees through
-the admin UI or Django admin at `/admin/`.
+## Setup (Docker)
+
+If you'd rather skip the virtualenv dance:
+
+```
+docker compose up --build
+```
+
+This builds the image, runs migrations, loads the demo data, and starts the
+server at `http://127.0.0.1:8000/`. The SQLite file lives in a named volume
+(`sqlite_data`) so your data survives `docker compose down` / restarts — only
+`docker compose down -v` wipes it.
 
 ## Demo credentials
 
@@ -84,11 +85,7 @@ the admin UI or Django admin at `/admin/`.
 
 ## Notes
 
-- Admin status is based on a `role` field on the custom User model (not just
-  `is_staff`), so it's easy to tell apart from Django's built-in admin flag.
-- Attendance records are unique per employee per day — checking in twice on the
-  same day just updates the existing record instead of creating duplicates.
-- The dashboard charts are rendered with Chart.js loaded from a CDN, fed by data
-  computed with Django's ORM (`Count`, `annotate`) — no raw SQL anywhere in the app.
-- Export and dashboard routes are guarded at the view level, so a regular employee
-  hitting those URLs directly gets a 403, not just a hidden link.
+- Admin status is based on a `role` field on the custom User model (not just `is_staff`), so it's easy to tell apart from Django's built-in admin flag.
+- Attendance records are unique per employee per day — checking in twice on the same day just updates the existing record instead of creating duplicates.
+- The dashboard charts are rendered with Chart.js loaded from a CDN, fed by data computed with Django's ORM (`Count`, `annotate`) — no raw SQL anywhere in the app.
+- Export and dashboard routes are guarded at the view level, so a regular employee hitting those URLs directly gets a 403, not just a hidden link.
