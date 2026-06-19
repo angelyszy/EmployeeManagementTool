@@ -2,6 +2,14 @@
 
 A simple employee management web app built with Django. It covers authentication, employee CRUD, daily attendance (check-in/check-out), attendance reports, server-side pagination & search, data export (Excel/CSV), and an admin dashboard with charts.
 
+## Live demo
+
+[employee-management-tool-fpj7.onrender.com](https://employee-management-tool-fpj7.onrender.com)
+
+Deployed on Render's free tier, so the first request after a period of
+inactivity can take ~30s to wake up. Login credentials are in the
+[Demo credentials](#demo-credentials) section below.
+
 ## Features
 
 - **Authentication**: Admin and Employee accounts, each redirected to a different home page after login.
@@ -74,7 +82,8 @@ server at `http://127.0.0.1:8000/`. The SQLite file lives in a named volume
 
 ## Deploying (Render)
 
-The repo includes a `render.yaml` blueprint, so deployment is mostly point-and-click:
+This is how the [live demo](#live-demo) above was deployed. The repo includes a
+`render.yaml` blueprint, so deploying your own copy is mostly point-and-click:
 
 1. Push the repo to GitHub (already done if you're reading this from there).
 2. On [Render](https://render.com), go to **New > Blueprint**, connect this repo, and Render will read `render.yaml` and set everything up — build command, start command, and a generated `SECRET_KEY` — automatically.
