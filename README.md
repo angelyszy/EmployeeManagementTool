@@ -61,7 +61,7 @@ templates/     all HTML templates
 
 ## Setup (Docker)
 
-If you'd rather skip the virtualenv dance:
+If you'd rather skip the virtualenv:
 
 ```
 docker compose up --build
@@ -77,17 +77,10 @@ server at `http://127.0.0.1:8000/`. The SQLite file lives in a named volume
 The repo includes a `render.yaml` blueprint, so deployment is mostly point-and-click:
 
 1. Push the repo to GitHub (already done if you're reading this from there).
-2. On [Render](https://render.com), go to **New > Blueprint**, connect this repo, and
-   Render will read `render.yaml` and set everything up — build command, start
-   command, and a generated `SECRET_KEY` — automatically.
-3. Once it's live, demo data (the admin + 5 employee accounts) gets (re)created on
-   every boot via `seed_demo_data`, so it's always there even after the service
-   spins down on the free tier.
+2. On [Render](https://render.com), go to **New > Blueprint**, connect this repo, and Render will read `render.yaml` and set everything up — build command, start command, and a generated `SECRET_KEY` — automatically.
+3. Once it's live, demo data (the admin + 5 employee accounts) gets (re)created on every boot via `seed_demo_data`, so it's always there even after the service spins down on the free tier.
 
-Note: Render's free web service tier doesn't have persistent disk, so the SQLite
-file resets whenever the service restarts/redeploys. That's fine for demo purposes
-since the seed step always restores the same accounts and sample attendance — just
-don't expect manually-added data to survive a restart on the free tier.
+Note: Render's free web service tier doesn't have persistent disk, so the SQLite file resets whenever the service restarts/redeploys.
 
 ## Demo credentials
 
