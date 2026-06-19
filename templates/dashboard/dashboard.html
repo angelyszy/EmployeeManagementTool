@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h4 class="mb-3">Dashboard</h4>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="stat-box">
+            <span>Total Employees</span>
+            <h3>{{ total_employees }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-box">
+            <span>Active Employees</span>
+            <h3>{{ active_employees }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-box">
+            <span>Checked-in Today</span>
+            <h3>{{ today_checkins }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="chart-card">
+            <h6>Employees per Position</h6>
+            <canvas id="positionChart" height="220"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="chart-card">
+            <h6>Attendance - Last 7 Days</h6>
+            <canvas id="attendanceChart" height="220"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    const positionChart = new Chart(document.getElementById('positionChart'), {
+        type: 'pie',
+        data: {
+            labels: {{ position_labels|safe }},
+            datasets: [{
+                data: {{ position_values|safe }},
+                backgroundColor: ['#0274bc', '#ba0d2b', '#99c5e9', '#045a91', '#6c8ea3', '#d97a8a'],
+            }],
+        },
+    });
+
+    const attendanceChart = new Chart(document.getElementById('attendanceChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ attendance_labels|safe }},
+            datasets: [{
+                label: 'Check-ins',
+                data: {{ attendance_values|safe }},
+                backgroundColor: '#0274bc',
+            }],
+        },
+        options: {
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        },
+    });
+</script>
+{% endblock %}
