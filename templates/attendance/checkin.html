@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Check-in{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4 text-center mb-4">
+            <h5>Today - {{ record.tanggal }}</h5>
+            <p class="mb-1">Check-in: <strong>{{ record.jam_masuk|default:"not yet" }}</strong></p>
+            <p class="mb-3">Check-out: <strong>{{ record.jam_keluar|default:"not yet" }}</strong></p>
+
+            <form method="post" class="d-flex justify-content-center gap-2">
+                {% csrf_token %}
+                <button type="submit" name="action" value="checkin" class="btn btn-success" {% if record.jam_masuk %}disabled{% endif %}>Check-in</button>
+                <button type="submit" name="action" value="checkout" class="btn btn-warning" {% if not record.jam_masuk or record.jam_keluar %}disabled{% endif %}>Check-out</button>
+            </form>
+        </div>
+
+        <div class="card p-3">
+            <h6>Last 7 records</h6>
+            <table class="table table-sm">
+                <thead><tr><th>Employee</th><th>Date</th><th>In</th><th>Out</th></tr></thead>
+                <tbody>
+                    {% for r in recent %}
+                    <tr>
+                        <td>{{ r.karyawan.nama }}</td>
+                        <td>{{ r.tanggal }}</td>
+                        <td>{{ r.jam_masuk|default:"-" }}</td>
+                        <td>{{ r.jam_keluar|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
