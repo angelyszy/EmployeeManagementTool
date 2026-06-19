@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ employee.nama }}{% endblock %}
+{% block content %}
+<div class="card p-4" style="max-width: 500px;">
+    <h4>{{ employee.nama }}</h4>
+    <table class="table">
+        <tr><th>Email</th><td>{{ employee.email }}</td></tr>
+        <tr><th>Position</th><td>{{ employee.jabatan }}</td></tr>
+        <tr><th>Join Date</th><td>{{ employee.tanggal_masuk }}</td></tr>
+        <tr><th>Status</th><td>{% if employee.status_aktif %}Active{% else %}Inactive{% endif %}</td></tr>
+    </table>
+    {% if user.is_admin %}
+    <a href="{% url 'employee-list' %}" class="btn btn-link">Back to list</a>
+    {% endif %}
+</div>
+{% endblock %}

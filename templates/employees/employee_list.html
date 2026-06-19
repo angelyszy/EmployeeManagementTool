@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Employees{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Employees</h4>
+    <a href="{% url 'employee-add' %}" class="btn btn-primary btn-sm">+ Add Employee</a>
+</div>
+
+<div class="card p-3 mb-3">
+    <form method="get" class="row g-2">
+        <div class="col-md-8">
+            <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search by name, email, or position">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-secondary w-100" type="submit">Search</button>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'employee-list' %}" class="btn btn-outline-secondary w-100">Reset</a>
+        </div>
+    </form>
+</div>
+
+<div class="mb-2">
+    <a href="{% url 'employee-export-csv' %}" class="btn btn-outline-success btn-sm">Export CSV</a>
+    <a href="{% url 'employee-export-excel' %}" class="btn btn-outline-success btn-sm">Export Excel</a>
+</div>
+
+<div class="card">
+    <table class="table table-hover mb-0">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Position</th>
+                <th>Join Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td><a href="{% url 'employee-detail' emp.pk %}">{{ emp.nama }}</a></td>
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.jabatan }}</td>
+                <td>{{ emp.tanggal_masuk }}</td>
+                <td>
+                    {% if emp.status_aktif %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Inactive</span>
+                    {% endif %}
+                </td>
+                <td class="table-actions">
+                    <a href="{% url 'employee-edit' emp.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a href="{% url 'employee-delete' emp.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center text-muted py-4">No employees found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}
