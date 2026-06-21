@@ -67,19 +67,6 @@ templates/     all HTML templates
    ```
 7. Open `http://127.0.0.1:8000/` in your browser.
 
-## Setup (Docker)
-
-If you'd rather skip the virtualenv:
-
-```
-docker compose up --build
-```
-
-This builds the image, runs migrations, loads the demo data, and starts the
-server at `http://127.0.0.1:8000/`. The SQLite file lives in a named volume
-(`sqlite_data`) so your data survives `docker compose down` / restarts — only
-`docker compose down -v` wipes it.
-
 ## Deploying (Render)
 
 This is how the [live demo](#live-demo) above was deployed. The repo includes a
