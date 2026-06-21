@@ -10,11 +10,11 @@ class Employee(models.Model):
         blank=True,
         related_name='employee_profile',
     )
-    nama = models.CharField(max_length=150)
-    email = models.EmailField(unique=True)
-    jabatan = models.CharField(max_length=100)
-    tanggal_masuk = models.DateField()
-    status_aktif = models.BooleanField(default=True)
+    nama = models.CharField(max_length=150, verbose_name='Name')
+    email = models.EmailField(unique=True, verbose_name='Email')
+    jabatan = models.CharField(max_length=100, verbose_name='Position')
+    tanggal_masuk = models.DateField(verbose_name='Join Date')
+    status_aktif = models.BooleanField(default=True, verbose_name='Active')
 
     class Meta:
         ordering = ['nama']

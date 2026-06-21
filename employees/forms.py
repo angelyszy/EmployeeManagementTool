@@ -18,6 +18,13 @@ class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
         fields = ['nama', 'email', 'jabatan', 'tanggal_masuk', 'status_aktif']
+        labels = {
+            'nama': 'Name',
+            'email': 'Email',
+            'jabatan': 'Position',
+            'tanggal_masuk': 'Join Date',
+            'status_aktif': 'Active',
+        }
         widgets = {
             'nama': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),

@@ -5,10 +5,10 @@ from employees.models import Employee
 
 
 class Attendance(models.Model):
-    karyawan = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='attendances')
-    tanggal = models.DateField(default=timezone.localdate)
-    jam_masuk = models.TimeField(null=True, blank=True)
-    jam_keluar = models.TimeField(null=True, blank=True)
+    karyawan = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='attendances', verbose_name='Employee')
+    tanggal = models.DateField(default=timezone.localdate, verbose_name='Date')
+    jam_masuk = models.TimeField(null=True, blank=True, verbose_name='Check-in Time')
+    jam_keluar = models.TimeField(null=True, blank=True, verbose_name='Check-out Time')
 
     class Meta:
         ordering = ['-tanggal', '-jam_masuk']
